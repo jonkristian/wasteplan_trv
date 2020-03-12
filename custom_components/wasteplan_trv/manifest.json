@@ -1,0 +1,8 @@
+{
+    "domain": "wasteplan_trv",
+    "name": "Wasteplan TRV",
+    "documentation": "https://github.com/jonkristian/wasteplan_trv",
+    "dependencies": [],
+    "codeowners": ["@jonkristian"],
+    "requirements": []
+  }
