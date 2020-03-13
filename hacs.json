@@ -1,5 +1,6 @@
 {
   "name": "Wasteplan TRV",
   "domains": "sensor",
-  "country": "NO"
+  "country": "NO",
+  "render_readme": true
 }
