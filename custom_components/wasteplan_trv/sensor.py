@@ -107,13 +107,22 @@ class TRVSensor(Entity):
     def update(self):
         """Update the sensor."""
         self._data.update()
-
         self._state = 0
+
+        weeks_until = 0
+        this_week = now().isocalendar()[1]
+
         for entry in self._data.data['calendar']:
             if self._name == entry['wastetype']:
+                weeks_until = entry['week'] - this_week
 
-                if now().isocalendar()[1] == entry['week']:
-                    self._state = 1
+                if 0 == weeks_until:
+                    self._state = 'Denne uken'
                     self._icon = SENSOR_TYPES[self._name][1]
+                elif 1 == weeks_until:
+                    self._state = 'Neste uke'
+                else:
+                    self._state = 'Om '+str(weeks_until)+' uker'
+
                 self._next_pickup_week = entry['week']
                 break
