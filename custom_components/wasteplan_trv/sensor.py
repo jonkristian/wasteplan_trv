@@ -16,7 +16,7 @@ _LOGGER = logging.getLogger(__name__)
 
 ATTRIBUTION = "Data provided by https://trv.no"
 
-SCAN_INTERVAL = timedelta(days=30)
+SCAN_INTERVAL = timedelta(hours=1)
 
 CONF_BIN_NUMBER = "bin_number"
 CONF_BIN_TYPE = "bin_type"
