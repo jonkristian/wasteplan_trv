@@ -22,11 +22,15 @@ https://trv.no/wp-json/wasteplan/v1/bins/?s=
 **bin_number**
 (integer)(Required) The ID bin number.
 
+**pickup_day**
+(integer)(Optional) Day of the week for pickups. 1 = Monday and so on.
+
 ## Configuration
 ```yaml
 sensor:
   - platform: wasteplan_trv
     bin_number: 774
+    pickup_day: 0
 ```
 
 ⭐️ this repository if you found it useful ❤️
