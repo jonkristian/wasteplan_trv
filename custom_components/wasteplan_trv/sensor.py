@@ -44,8 +44,10 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
 def setup_platform(hass, config, add_entities, discovery_info=None):
     """Set up the TRV sensor."""
     bin_number = config.get(CONF_BIN_NUMBER)
-    pickup_day = config.get(CONF_PICKUP_DAY)
-    data = TRVData(bin_number, pickup_day)
+    pickup_day = 0
+    if config.get(CONF_PICKUP_DAY):
+        pickup_day = config.get(CONF_PICKUP_DAY)
+    data = TRVData(bin_number)
     data.update()
 
     sensors = []
@@ -58,7 +60,7 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
 class TRVData:
     """Get the latest data for all authorities."""
 
-    def __init__(self, bin_number, pickup_day):
+    def __init__(self, bin_number):
         """Initialize the object."""
         self.data = None
         self.bin_number = bin_number
@@ -86,7 +88,7 @@ class TRVSensor(Entity):
         self._date_week_start = None
         self._date_week_end = None
         self._description = None
-        self._pickup_day = int(pickup_day)
+        self._pickup_day = pickup_day
         self._state = None
         self.attrs = {ATTR_ATTRIBUTION: ATTRIBUTION}
 
