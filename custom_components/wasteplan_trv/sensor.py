@@ -24,14 +24,14 @@ CONF_PICKUP_DAY = "pickup_day"
 
 URL = "https://trv.no/wp-json/wasteplan/v1/calendar/"
 
-# Default | Today | This week | Emptied | Next Week
+# Default | Today | Tomorrow | This week | Emptied | Next Week
 SENSOR_TYPES = {
-    "Restavfall":      ["mdi:recycle",     "mdi:delete-alert-outline", "mdi:delete-clock-outline", "mdi:delete-empty-outline", "mdi:delete-restore"],
-    "Papir":           ["mdi:file",        "mdi:delete-alert-outline", "mdi:delete-clock-outline", "mdi:delete-empty-outline", "mdi:delete-restore"],
-    "Plastemballasje": ["mdi:bottle-soda", "mdi:delete-alert-outline", "mdi:delete-clock-outline", "mdi:delete-empty-outline", "mdi:delete-restore"],
-    "Hageavfall":      ["mdi:apple",       "mdi:delete-alert-outline", "mdi:delete-clock-outline", "mdi:delete-empty-outline", "mdi:delete-restore"],
-    "Tømmefri uke":    ["mdi:delete-forever-outline", "mdi:delete-forever-outline", "mdi:delete-forever-outline", "mdi:delete-forever-outline"],
-    "Farlig avfall":   ["mdi:skull-crossbones", "mdi:skull-scan", "mdi:skull-scan-outline", "mdi:skull-outline", "mdi:skull-crossbones-outline"]
+    "Restavfall":      ["mdi:recycle",     "mdi:delete-alert", "mdi:delete-alert-outline", "mdi:delete-clock-outline", "mdi:delete-empty-outline", "mdi:delete-restore"],
+    "Papir":           ["mdi:file",        "mdi:delete-alert", "mdi:delete-alert-outline", "mdi:delete-clock-outline", "mdi:delete-empty-outline", "mdi:delete-restore"],
+    "Plastemballasje": ["mdi:bottle-soda", "mdi:delete-alert", "mdi:delete-alert-outline", "mdi:delete-clock-outline", "mdi:delete-empty-outline", "mdi:delete-restore"],
+    "Hageavfall":      ["mdi:apple",       "mdi:delete-alert", "mdi:delete-alert-outline", "mdi:delete-clock-outline", "mdi:delete-empty-outline", "mdi:delete-restore"],
+    "Tømmefri uke":    ["mdi:delete-forever-outline", "mdi:delete-forever-outline", "mdi:delete-forever-outline", "mdi:delete-forever-outline", "mdi:delete-forever-outline"],
+    "Farlig avfall":   ["mdi:skull-crossbones", "mdi:skull-scan", "mdi:skull-scan-outline", "mdi:skull-scan-outline", "mdi:skull-outline", "mdi:skull-crossbones-outline"]
 }
 
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
@@ -46,7 +46,7 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
     bin_number = config.get(CONF_BIN_NUMBER)
     pickup_day = 0
     if config.get(CONF_PICKUP_DAY):
-        pickup_day = config.get(CONF_PICKUP_DAY)
+        pickup_day = int(config.get(CONF_PICKUP_DAY))
     data = TRVData(bin_number)
     data.update()
 
@@ -122,7 +122,8 @@ class TRVSensor(Entity):
         self._data.update()
         self._state = 'Ikke bestemt'
 
-        today = date.today().weekday()
+        today = date.now().weekday()
+        tomorrow = (date.now() + timedelta(1)).weekday()
         weeks_until = 0
         this_week = now().isocalendar()[1]
 
@@ -139,17 +140,20 @@ class TRVSensor(Entity):
                     if today == self._pickup_day:
                         self._state = 'I dag'
                         self._icon = SENSOR_TYPES[self._name][1]
+                    elif tomorrow == self._pickup_day:
+                        self._state = 'I morgen'
+                        self._icon = SENSOR_TYPES[self._name][2]
                     elif today < self._pickup_day:
                         self._state = 'Denne uken'
-                        self._icon = SENSOR_TYPES[self._name][2]
+                        self._icon = SENSOR_TYPES[self._name][3]
                     else:
                         self._state = 'Tømt'
-                        self._icon = SENSOR_TYPES[self._name][3]
+                        self._icon = SENSOR_TYPES[self._name][4]
 
                 elif 1 == weeks_until:
 
                     self._state = 'Neste uke'
-                    self._icon = SENSOR_TYPES[self._name][4]
+                    self._icon = SENSOR_TYPES[self._name][5]
 
                 else:
 

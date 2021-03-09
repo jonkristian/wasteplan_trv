@@ -23,7 +23,7 @@ https://trv.no/wp-json/wasteplan/v1/bins/?s=
 (integer)(Required) The ID bin number.
 
 **pickup_day**
-(integer)(Optional) Day of the week for pickups. 1 = Monday and so on.
+(integer)(Optional) Day of the week for pickups. 0 = Monday and so on.
 
 ## Configuration
 ```yaml
