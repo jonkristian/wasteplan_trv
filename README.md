@@ -1,6 +1,8 @@
 # Wasteplan TRV
 Wasteplan component for Trondheim Renholdsverk (TRV).
-This component provides sensors for your bins and gives you status about bin pickup.
+This component provides sensors for your bins or containers and gives you status about pickup.
+
+[![image-1.png](https://i.postimg.cc/hGs0gPr7/image-1.png)](https://postimg.cc/f33dfs1w)
 
 ## Installation
 
@@ -22,6 +24,9 @@ https://trv.no/wp-json/wasteplan/v1/bins/?s=
 **bin_number**
 (integer)(Required) The ID bin number.
 
+**container**
+(bool)(Optional) For use with container pickups. Defaults to **false**.
+
 **pickup_day**
 (integer)(Optional) Day of the week for pickups. 0 = Monday and so on.
 
@@ -30,6 +35,7 @@ https://trv.no/wp-json/wasteplan/v1/bins/?s=
 sensor:
   - platform: wasteplan_trv
     bin_number: 774
+    container: false
     pickup_day: 0
 ```
 
