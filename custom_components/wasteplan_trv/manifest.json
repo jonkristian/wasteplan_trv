@@ -8,5 +8,6 @@
     "@jonkristian"
   ],
   "requirements": [],
+  "iot_class": "cloud_polling",
   "version": "1.0.0"
 }

@@ -1,9 +1,6 @@
 """Platform for sensor integration."""
-from datetime import timedelta, datetime as date
+from datetime import datetime as date, timedelta
 import logging
-
-import requests
-import voluptuous as vol
 
 from homeassistant.components.sensor import PLATFORM_SCHEMA
 from homeassistant.const import ATTR_ATTRIBUTION
@@ -11,8 +8,19 @@ import homeassistant.helpers.config_validation as cv
 from homeassistant.helpers.entity import Entity
 from homeassistant.util import Throttle
 import homeassistant.util.dt as dt_util
+import requests
+import voluptuous as vol
 
-from .const import SENSOR_TYPES, ATTRIBUTION, CONF_BIN_NUMBER, CONF_CONTAINER, CONF_BIN_TYPE, CONF_PICKUP_DAY, URL
+from .const import (
+    ATTRIBUTION,
+    CONF_BIN_NUMBER,
+    CONF_BIN_TYPE,
+    CONF_CONTAINER,
+    CONF_PICKUP_DAY,
+    SENSOR_TYPES,
+    URL,
+)
+
 _LOGGER = logging.getLogger(__name__)
 
 SCAN_INTERVAL = timedelta(hours=5)
