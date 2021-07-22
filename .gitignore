@@ -12,3 +12,6 @@ eggs
 *#
 *.orig
 .idea
+
+# vscode
+.vscode

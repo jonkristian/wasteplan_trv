@@ -147,7 +147,10 @@ class TRVSensor(Entity):
 
         if 0 == weeks_until:
 
-            if today == self._pickup_day:
+            if self._name.startswith('Tømmefri'):
+                state = 'Denne uken'
+                icon = SENSOR_TYPES[self._sensor_type][self._name][3]
+            elif today == self._pickup_day:
                 state = 'I dag'
                 icon = SENSOR_TYPES[self._sensor_type][self._name][1]
             elif tomorrow == self._pickup_day:

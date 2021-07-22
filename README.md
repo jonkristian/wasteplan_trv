@@ -1,4 +1,6 @@
 # Wasteplan TRV
+[![hacs_badge](https://img.shields.io/badge/HACS-Default-orange.svg)](https://github.com/custom-components/hacs)
+
 Wasteplan component for Trondheim Renholdsverk (TRV).
 This component provides sensors for your bins or containers and gives you status about pickup.
 
@@ -20,17 +22,14 @@ Download or clone and copy the folder `custom/components/wasteplan_trv` into you
 Append your address to the end of the following url to look up your address id (bin_number):
 https://trv.no/wp-json/wasteplan/v1/bins/?s=
 
-### CONFIGURATION VARIABLES
-**bin_number**
-(integer)(Required) The ID bin number.
+### Configuration variables
+| Variable |  Required  |  Type  | Description |
+| -------- | ---------- | ----------- | ----------- |
+| `bin_number` | yes | integer |  Bin number ID. |
+| `container` | no | bool | Set to `true` if you use containers. |
+| `pickup_day` | no | integer | Pickup day of the week. Monday starts with 0. |
 
-**container**
-(bool)(Optional) For use with container pickups. Defaults to **false**.
-
-**pickup_day**
-(integer)(Optional) Day of the week for pickups. 0 = Monday and so on.
-
-## Configuration
+## Example
 ```yaml
 sensor:
   - platform: wasteplan_trv
