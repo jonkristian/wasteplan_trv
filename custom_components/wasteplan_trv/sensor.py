@@ -126,9 +126,10 @@ class TRVSensor(Entity):
 
                 self._state, self._icon = self.pickup_state()
 
-                if entry["week"] == this_week and today <= self._pickup_day:
+                if entry["week"] == this_week:
                     self._pickup_this_week = True
-                    break
+                    if today <= self._pickup_day:
+                        break
 
                 elif entry["week"] > this_week:
                     break
