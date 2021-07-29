@@ -17,24 +17,23 @@ Download or clone and copy the folder `custom/components/wasteplan_trv` into you
 3. Configure the sensor
 4. Restart Home Assistant
 
-## Setup
+## Finding your ID
 
-Append your address to the end of the following url to look up your address id (bin_number):
-https://trv.no/wp-json/wasteplan/v1/bins/?s=
+To locate your ID, append your address to the end of one of the URLs below, either bin or container.
+- Bins: https://trv.no/wp-json/wasteplan/v1/bins/?s=
+- Containers: https://trv.no/wp-json/wasteplan/v1/containers/?s=
 
 ### Configuration variables
 | Variable |  Required  |  Type  | Description |
 | -------- | ---------- | ----------- | ----------- |
-| `bin_number` | yes | integer |  Bin number ID. |
-| `container` | no | bool | Set to `true` if you use containers. |
-| `pickup_day` | no | integer | Pickup day of the week. Monday starts with 0. |
+| `id` | yes | integer |  Bin/Container ID. |
+| `pickup_day` | no | integer | Pickup day of the week. Defaults to 0 (Monday). |
 
 ## Example
 ```yaml
 sensor:
   - platform: wasteplan_trv
-    bin_number: 774
-    container: false
+    id: 774
     pickup_day: 0
 ```
 
