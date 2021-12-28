@@ -11,7 +11,13 @@ import homeassistant.util.dt as dt_util
 import requests
 import voluptuous as vol
 
-from .const import ATTRIBUTION, CONF_PICKUP_DAY, CONF_PICKUP_ID, URL, WASTE_TYPES
+from .const import (
+    ATTRIBUTION,
+    CONF_PICKUP_ID,
+    CONF_PICKUP_DAY,
+    WASTE_TYPES,
+    URL,
+)
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -92,7 +98,7 @@ class TRVSensor(Entity):
         return self._icon
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return other details about the sensor state."""
         self.attrs["next_pickup_week"] = self._next_pickup_week
         self.attrs["pickup_this_week"] = self._pickup_this_week
