@@ -1,4 +1,7 @@
 # Wasteplan TRV
+# NOTE
+Unfortunately trv api v1 doesn't seem to work any longer, and it seems that they don't plan on giving access to v2, so this component will no longer work. [Ticket with response from trv](/issues/13).
+
 [![hacs_badge](https://img.shields.io/badge/HACS-Default-orange.svg)](https://github.com/custom-components/hacs)
 
 Wasteplan component for Trondheim Renholdsverk (TRV).
