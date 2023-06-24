@@ -50,21 +50,17 @@ class TRVCalendar(TRVEntity, CalendarEntity):
   ) -> list[CalendarEvent]:
     """Return calendar events within a datetime range."""
     events: list[CalendarEvent] = []
-
-    # start = start_date.strftime("%Y-%m-%d")
-    # end = end_date.strftime("%Y-%m-%d")
-
     for waste in self.coordinator.data["calendar"]:
       waste_date = datetime.strptime(waste["dato"], "%Y-%m-%dT%H:%M:%S")
-      start = dt.start_of_local_day(waste_date)
+      waste_start = dt.start_of_local_day(waste_date)
 
       event = CalendarEvent(
         summary=str(waste["fraksjon"]),
-        start=start,
-        end=start + timedelta(days=1),
+        start=waste_start,
+        end=waste_start + timedelta(days=1),
       )
 
-      if event is not None:
+      if start_date <= waste_start <= end_date and event is not None:
         events.append(event)
 
     return events
