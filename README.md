@@ -1,45 +1,46 @@
 # Wasteplan TRV
-# NOTE
-Unfortunately trv api v1 doesn't seem to work any longer, and it seems that they don't plan on giving access to v2, so this component will no longer work. [Ticket with response from trv](/issues/13).
 
-[![hacs_badge](https://img.shields.io/badge/HACS-Default-orange.svg)](https://github.com/custom-components/hacs)
+[![GitHub Release][releases-shield]][releases]
+[![License][license-shield]](LICENSE)
+[![hacs][hacsbadge]][hacs]
+![Project Maintenance][maintenance-shield]
+[![BuyMeCoffee][buymecoffeebadge]][buymecoffee]
 
 Wasteplan component for Trondheim Renholdsverk (TRV).
-This component provides sensors for your bins or containers and gives you status about pickup.
-
-[![image-1.png](https://i.postimg.cc/hGs0gPr7/image-1.png)](https://postimg.cc/f33dfs1w)
+This component creates a calendar of pickup events.
 
 ## Installation
 
-### Manual installation
-Download or clone and copy the folder `custom/components/wasteplan_trv` into your `custom_components/`
-
-### Installation via Home Assistant Community Store (HACS)
 1. Ensure [HACS](http://hacs.xyz/) is installed.
 2. Search for and install the "Wasteplan TRV" integration
-3. Configure the sensor
-4. Restart Home Assistant
+3. Install and restart Home Assistant
+4. Install Wasteplan TRV from the integrations screen.
 
-## Finding your ID
+## Attributions
+- This component uses the excellent [integration_blueprint] from [ludeeus].
 
-To locate your ID, append your address to the end of one of the URLs below, either bin or container.
-- Bins: https://trv.no/wp-json/wasteplan/v1/bins/?s=
-- Containers: https://trv.no/wp-json/wasteplan/v1/containers/?s=
+## Contributions are welcome!
 
-### Configuration variables
-| Variable |  Required  |  Type  | Description |
-| -------- | ---------- | ----------- | ----------- |
-| `id` | yes | integer |  Bin/Container ID. |
-| `pickup_day` | no | integer | Pickup day of the week. Defaults to 0 (Monday). |
+If you want to contribute to this please read the [Contribution guidelines](CONTRIBUTING.md)
 
-## Example
-```yaml
-sensor:
-  - platform: wasteplan_trv
-    id: 774
-    pickup_day: 0
-```
+***
 
 ⭐️ this repository if you found it useful ❤️
 
-<a href="https://www.buymeacoffee.com/jonkristian" target="_blank"><img src="https://bmc-cdn.nyc3.digitaloceanspaces.com/BMC-button-images/custom_images/white_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
+[![BuyMeCoffee][buymecoffebadge2]][buymecoffee]
+
+[wasteplan_trv]: https://github.com/jonkristian/wasteplan_trv
+[buymecoffee]: https://www.buymeacoffee.com/jonkristian
+[buymecoffeebadge]: https://img.shields.io/badge/buy%20me%20a%20coffee-donate-yellow.svg?style=for-the-badge
+[buymecoffebadge2]: https://bmc-cdn.nyc3.digitaloceanspaces.com/BMC-button-images/custom_images/white_img.png
+[hacs]: https://github.com/hacs/integration
+[hacsbadge]: https://img.shields.io/badge/HACS-Default-orange.svg?style=for-the-badge
+[forum-shield]: https://img.shields.io/badge/community-forum-brightgreen.svg?style=for-the-badge
+[forum]: https://community.home-assistant.io/
+[license-shield]: https://img.shields.io/github/license/jonkristian/wasteplan_trv.svg?style=for-the-badge
+[maintenance-shield]: https://img.shields.io/badge/maintainer-Jon%20Kristian%20sNilsen%20%40jonkristian-blue.svg?style=for-the-badge
+[releases-shield]: https://img.shields.io/github/release/jonkristian/wasteplan_trv.svg?style=for-the-badge
+[releases]: https://github.com/jonkristian/wasteplan_trv/releases
+[exampleimg]: example.png
+[integration_blueprint]: https://github.com/ludeeus/integration_blueprint
+[ludeeus]: https://github.com/ludeeus/
