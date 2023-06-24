@@ -1,0 +1,24 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "data": {
+          "location_name": "Address"
+        },
+        "description": "Fill out your address"
+      },
+      "location": {
+        "data": {
+          "calendar_name": "Calendar name",
+          "location_id": "Location ID"
+        },
+        "description": "Pick your location"
+      }
+    },
+    "error": {
+      "no_location": "Unable to find location based on your address",
+      "connection": "Unable to connect to the server.",
+      "unknown": "[%key:common::config_flow::error::unknown%]"
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "data": {
+          "location_name": "Adresse"
+        },
+        "description": "Skriv inn din adresse"
+      },
+      "location": {
+        "data": {
+          "calendar_name": "Kalendernavn",
+          "location_id": "Lokasjons ID"
+        },
+        "description": "Velg din lokasjon"
+      }
+    },
+    "error": {
+      "no_location": "Fant ingen lokasjoner fra denne adressen.",
+      "connection": "Kunne ikke kontakte til server.",
+      "unknown": "[%key:common::config_flow::error::unknown%]"
+    }
+  }
+}
