@@ -34,11 +34,13 @@ If you want to contribute to this please read the [Contribution guidelines](CONT
 [buymecoffeebadge]: https://img.shields.io/badge/buy%20me%20a%20coffee-donate-yellow.svg?style=for-the-badge
 [buymecoffebadge2]: https://bmc-cdn.nyc3.digitaloceanspaces.com/BMC-button-images/custom_images/white_img.png
 [hacs]: https://github.com/hacs/integration
-[hacsbadge]: https://img.shields.io/badge/HACS-Default-orange.svg?style=for-the-badge
+
+[hacsbadge]: https://img.shields.io/badge/HACS-Custom-orange.svg?style=for-the-badge
 [forum-shield]: https://img.shields.io/badge/community-forum-brightgreen.svg?style=for-the-badge
 [forum]: https://community.home-assistant.io/
 [license-shield]: https://img.shields.io/github/license/jonkristian/wasteplan_trv.svg?style=for-the-badge
-[maintenance-shield]: https://img.shields.io/badge/maintainer-Jon%20Kristian%20sNilsen%20%40jonkristian-blue.svg?style=for-the-badge
+[maintenance-shield]: https://img.shields.io/badge/maintainer-Jon%20Kristian%20Nilsen%20%40jonkristian-blue.svg?style=for-the-badge
+
 [releases-shield]: https://img.shields.io/github/release/jonkristian/wasteplan_trv.svg?style=for-the-badge
 [releases]: https://github.com/jonkristian/wasteplan_trv/releases
 [exampleimg]: example.png
