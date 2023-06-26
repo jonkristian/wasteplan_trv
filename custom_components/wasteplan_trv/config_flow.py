@@ -66,13 +66,15 @@ class TRVConfigFLow(config_entries.ConfigFlow, domain=DOMAIN):
         if location["adresse"] == address
       ]
       location = locations[0]
-      location_id = location["id"]
       calendar_name = user_input.get(CALENDAR_NAME)
+      location_name = location["adresse"]
+      location_id = location["id"]
 
       return self.async_create_entry(
         title=address,
         data={
           CALENDAR_NAME: calendar_name,
+          LOCATION_NAME: location_name,
           LOCATION_ID: location_id,
         },
       )
