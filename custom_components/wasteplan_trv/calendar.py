@@ -52,14 +52,17 @@ class TRVCalendar(TRVEntity, CalendarEntity):
   ) -> list[CalendarEvent]:
     """Return calendar events within a datetime range."""
     events: list[CalendarEvent] = []
+    waste_summary = None
+    waste_pickup = None
     for waste in self.coordinator.data["calendar"]:
-      waste_date = datetime.strptime(waste["dato"], "%Y-%m-%dT%H:%M:%S").replace(hour=8, minute=00)
+      waste_date = datetime.strptime(waste["dato"], "%Y-%m-%dT%H:%M:%S").replace(hour=8)
+      waste_pickup = dt.as_local(waste_date)
+      waste_summary = waste["fraksjon"]
 
       event = CalendarEvent(
-        summary=str(waste["fraksjon"]),
-        start=waste_date,
-        end=waste_date + timedelta(hours=8),
-        location=self._attr_location
+        summary=waste_summary,
+        start=waste_pickup,
+        end=waste_pickup + timedelta(hours=8)
       )
 
       if start_date.date() <= waste_date.date() <= end_date.date() and event is not None:
@@ -70,22 +73,22 @@ class TRVCalendar(TRVEntity, CalendarEntity):
   @callback
   def _handle_coordinator_update(self) -> None:
     """Handle updated data from the coordinator."""
-    next_waste_pickup_type = None
-    next_waste_pickup_date = None
+    next_waste_summary = None
+    next_waste_pickup = None
     for waste in self.coordinator.data["calendar"]:
-      waste_date = datetime.strptime(waste["dato"], "%Y-%m-%dT%H:%M:%S").replace(hour=8, minute=00)
-      if (waste_date and (next_waste_pickup_date is None)
+      waste_date = datetime.strptime(waste["dato"], "%Y-%m-%dT%H:%M:%S").replace(hour=8)
+      if (waste_date and (next_waste_pickup is None)
         and waste_date.date() >= dt.now().date()
       ):
-        next_waste_pickup_date = waste_date
-        next_waste_pickup_type = waste["fraksjon"]
+        next_waste_pickup = dt.as_local(waste_date)
+        next_waste_summary = waste["fraksjon"]
 
       self._event = None
-      if next_waste_pickup_date is not None and next_waste_pickup_type is not None:
+      if next_waste_pickup is not None and next_waste_summary is not None:
         self._event = CalendarEvent(
-          summary=next_waste_pickup_type,
-          start=next_waste_pickup_date,
-          end=next_waste_pickup_date + timedelta(days=1),
+          summary=next_waste_summary,
+          start=next_waste_pickup,
+          end=next_waste_pickup + timedelta(hours=8),
         )
 
       super()._handle_coordinator_update()
