@@ -25,75 +25,49 @@ async def async_setup_entry(
 
 
 class TRVCalendar(TRVEntity, CalendarEntity):
-  """Define a Wasteplan calendar."""
-  _attr_icon = "mdi:delete-empty"
-  def __init__(
-    self,
-    coordinator: DataUpdateCoordinator,
-    entry: ConfigEntry,
-  ) -> None:
-    """Initialize the Wasteplan entity."""
-    super().__init__(coordinator, entry)
-    self._attr_unique_id = entry.data[LOCATION_ID]
-    self._attr_name = entry.data[CALENDAR_NAME]
-    self._attr_location = entry.data[LOCATION_NAME]
-    self._event: CalendarEvent | None = None
+    _attr_icon = "mdi:delete-empty"
 
-  @property
-  def event(self) -> CalendarEvent | None:
-    """Return the next upcoming event."""
-    return self._event
+    def __init__(self, coordinator: DataUpdateCoordinator, entry: ConfigEntry) -> None:
+        """Initialize the Wasteplan entity."""
+        super().__init__(coordinator, entry)
+        self._attr_unique_id = entry.data[LOCATION_ID]
+        self._attr_name = entry.data[CALENDAR_NAME]
+        self._attr_location = entry.data[LOCATION_NAME]
+        self._events: list[CalendarEvent] = []
 
-  async def async_get_events(
-    self,
-    hass: HomeAssistant,
-    start_date: datetime,
-    end_date: datetime,
-  ) -> list[CalendarEvent]:
-    """Return calendar events within a datetime range."""
-    events: list[CalendarEvent] = []
-    waste_summary = None
-    waste_pickup = None
-    for waste in self.coordinator.data["calendar"]:
-      waste_date = datetime.strptime(waste["dato"], "%Y-%m-%dT%H:%M:%S").replace(hour=8)
-      waste_pickup = dt.as_local(waste_date)
-      waste_summary = waste["fraksjon"]
+    @property
+    def event(self) -> CalendarEvent | None:
+        """Return the next upcoming event."""
+        if self._events:
+            return self._events[0]  # Return the first event in the list
+        return None  # Return None if no events are available
 
-      event = CalendarEvent(
-        summary=waste_summary,
-        start=waste_pickup,
-        end=waste_pickup + timedelta(hours=8)
-      )
+    @property
+    def extra_state_attributes(self) -> dict:
+        """Return the state attributes."""
+        return {"events": self._events}  # Expose all events
 
-      if start_date.date() <= waste_date.date() <= end_date.date() and event is not None:
-        events.append(event)
+    @callback
+    def _handle_coordinator_update(self) -> None:
+        """Handle updated data from the coordinator."""
+        self._events.clear()  # Clear previous events
+        for waste in self.coordinator.data["calendar"]:
+            waste_date = datetime.strptime(waste["dato"], "%Y-%m-%dT%H:%M:%S").replace(hour=8)
+            if waste_date.date() >= dt.now().date():
+                waste_pickup = dt.as_local(waste_date)
+                waste_summary = waste["fraksjon"]
 
-    return events
+                event = CalendarEvent(
+                    summary=waste_summary,
+                    start=waste_pickup,
+                    end=waste_pickup + timedelta(hours=8),
+                )
 
-  @callback
-  def _handle_coordinator_update(self) -> None:
-    """Handle updated data from the coordinator."""
-    next_waste_summary = None
-    next_waste_pickup = None
-    for waste in self.coordinator.data["calendar"]:
-      waste_date = datetime.strptime(waste["dato"], "%Y-%m-%dT%H:%M:%S").replace(hour=8)
-      if (waste_date and (next_waste_pickup is None)
-        and waste_date.date() >= dt.now().date()
-      ):
-        next_waste_pickup = dt.as_local(waste_date)
-        next_waste_summary = waste["fraksjon"]
+                self._events.append(event)  # Add the event to the list
 
-      self._event = None
-      if next_waste_pickup is not None and next_waste_summary is not None:
-        self._event = CalendarEvent(
-          summary=next_waste_summary,
-          start=next_waste_pickup,
-          end=next_waste_pickup + timedelta(hours=8),
-        )
+        super()._handle_coordinator_update()
 
-      super()._handle_coordinator_update()
-
-  async def async_added_to_hass(self) -> None:
-    """When entity is added to hass."""
-    await super().async_added_to_hass()
-    self._handle_coordinator_update()
+    async def async_added_to_hass(self) -> None:
+        """When entity is added to hass."""
+        await super().async_added_to_hass()
+        self._handle_coordinator_update()
