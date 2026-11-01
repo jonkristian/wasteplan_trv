@@ -18,7 +18,6 @@ class TRVConfigFLow(config_entries.ConfigFlow, domain=DOMAIN):
   """Handle config flow for Wasteplan TRV."""
 
   VERSION = 1
-  CONNECTION_CLASS = config_entries.CONN_CLASS_CLOUD_POLL
 
   def __init__(self) -> None:
     """Initialize the config flow."""
